@@ -14,7 +14,8 @@
 @property (strong, nonatomic) IBOutlet UILabel *nowTmp;
 @property (strong, nonatomic) IBOutlet UILabel *winddir;
 @property (strong, nonatomic) IBOutlet UILabel *nowCond;
-@property (strong, nonatomic) IBOutlet UILabel *city;
+@property (strong, nonatomic) IBOutlet UIImageView *weatherImg;
+@property (strong, nonatomic) IBOutlet UILabel *cityLable;
 
 @property (nonatomic, strong) NSArray *wData;
 

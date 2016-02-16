@@ -14,7 +14,7 @@
 #define kKey @"city"
 @interface ViewController () <UIScrollViewDelegate>
 @property (nonatomic, strong) UIScrollView *mainScrollView;
-@property (nonatomic ,strong) UIPageControl *pageControl;
+@property (nonatomic, strong) UIPageControl *pageControl;
 @property (nonatomic, strong) NSMutableArray *cityArray;
 @end
 
@@ -23,6 +23,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.view addSubview:self.mainScrollView];
+    
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"blue.jpg"]];
     self.cityArray = [[[NSUserDefaults standardUserDefaults]objectForKey:kKey]mutableCopy];
     if (self.cityArray.count != 0) {
@@ -32,13 +33,19 @@
             [self getWeatherDataOfCity:obj andTag:idx + 1];
             
         }];
-        self.mainScrollView.contentOffset = CGPointMake(0, 0);
+        [self.mainScrollView setContentOffset:CGPointMake(0, 0) animated:NO];
+        
+        
+        
     }else{
-        [self.cityArray addObject:@"beijing"];
+        //设置默认城市为北京
+        [self.cityArray addObject:@"北京"];
         [self drawWeatherViewOfWidth:self.view.frame.size.width];
         [self getWeatherDataOfCity:[self.cityArray objectAtIndex:0] andTag:1];
+      
     }
 //    [self getWeatherDataOfCity:@"yuyao" andTag:1];
+   
     [self addBtn];
     [self.view addSubview:self.pageControl];
 
@@ -59,7 +66,7 @@
     weatherView.tag = self.pageControl.numberOfPages;
 //下拉刷新
     weatherView.scrollView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
-        [self getWeatherDataOfCity:weatherView.city.text andTag:self.pageControl.currentPage + 1];
+        [self getWeatherDataOfCity:weatherView.cityLable.text andTag:self.pageControl.currentPage + 1];
         [weatherView.scrollView.mj_header endRefreshing];
     }];
     
@@ -91,7 +98,7 @@
         }
       //添加天气数据
         [weatherView setWeatherConditionWithData:[WeatherData weatherWithArray:responseObject[@"HeWeather data service 3.0"]]];
-    } andFailed:^(NSError *error) {
+        } andFailed:^(NSError *error) {
         
     }];
 }
@@ -136,6 +143,9 @@
 }
 - (void)deleteView
 {
+    if (self.cityArray.count == 0) {
+        return;
+    }else{
     [self.cityArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         if (idx == self.pageControl.currentPage) {
             WeatherView *view = [self.mainScrollView viewWithTag:idx +1];
@@ -152,7 +162,7 @@
     self.mainScrollView.contentSize = CGSizeMake(self.mainScrollView.contentSize.width - self.view.frame.size.width, 0);
     self.pageControl.numberOfPages = self.mainScrollView.contentSize.width / self.view.frame.size.width;
     [[NSUserDefaults standardUserDefaults]setObject:self.cityArray forKey:kKey];
- 
+    }
     
 }
 - (void)didReceiveMemoryWarning {
@@ -163,8 +173,11 @@
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     self.pageControl.currentPage = self.mainScrollView.contentOffset.x / self.view.frame.size.width;
+    
 }
-#pragma 懒加载
+#pragma mark - 懒加载
+
+
 - (UIScrollView *)mainScrollView
 {
     if (!_mainScrollView) {
@@ -191,6 +204,7 @@
     }
     return _pageControl;
 }
+
 
 - (NSMutableArray *)cityArray
 {

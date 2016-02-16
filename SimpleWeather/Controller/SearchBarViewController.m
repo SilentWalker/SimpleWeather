@@ -25,6 +25,7 @@
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
+    [self.searchBar resignFirstResponder];
     [self returnCityName];
 }
 
@@ -43,7 +44,6 @@
 - (void)returnCityName
 {
     [self dismissViewControllerAnimated:YES completion:^{
-        [self.searchBar resignFirstResponder];
         if (self.searchBar.text.length == 0) {
             return;
         }
@@ -63,6 +63,7 @@
     }
 }- (void)cancle
 {
+    [self.searchBar resignFirstResponder];
     [self returnCityName];
 }
 

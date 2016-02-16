@@ -7,6 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9C6D422A1C72F76F00F3E656 /* baoyu@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C6D421A1C72F76F00F3E656 /* baoyu@2x.png */; };
+		9C6D422B1C72F76F00F3E656 /* dayu@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C6D421B1C72F76F00F3E656 /* dayu@2x.png */; };
+		9C6D422C1C72F76F00F3E656 /* duoyun@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C6D421C1C72F76F00F3E656 /* duoyun@2x.png */; };
+		9C6D422D1C72F76F00F3E656 /* qing@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C6D421D1C72F76F00F3E656 /* qing@2x.png */; };
+		9C6D422E1C72F76F00F3E656 /* qingjianduoyun@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C6D421E1C72F76F00F3E656 /* qingjianduoyun@2x.png */; };
+		9C6D422F1C72F76F00F3E656 /* xiaoxue@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C6D421F1C72F76F00F3E656 /* xiaoxue@2x.png */; };
+		9C6D42301C72F76F00F3E656 /* xiaoyu@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C6D42201C72F76F00F3E656 /* xiaoyu@2x.png */; };
+		9C6D42311C72F76F00F3E656 /* yin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C6D42211C72F76F00F3E656 /* yin@2x.png */; };
+		9C6D42321C72F76F00F3E656 /* yinzhuanqing@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C6D42221C72F76F00F3E656 /* yinzhuanqing@2x.png */; };
+		9C6D42331C72F76F00F3E656 /* yujiaxue@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C6D42231C72F76F00F3E656 /* yujiaxue@2x.png */; };
+		9C6D42341C72F76F00F3E656 /* yuzhuanqing@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C6D42241C72F76F00F3E656 /* yuzhuanqing@2x.png */; };
+		9C6D42351C72F76F00F3E656 /* zhenyu@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C6D42251C72F76F00F3E656 /* zhenyu@2x.png */; };
+		9C6D42361C72F76F00F3E656 /* bingbao.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C6D42261C72F76F00F3E656 /* bingbao.png */; };
 		9CBA56E21C7173E1005D871B /* SimpleWeatherTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CBA56E11C7173E1005D871B /* SimpleWeatherTests.m */; };
 		9CBA56ED1C7173E1005D871B /* MyWeather_1_0UITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CBA56EC1C7173E1005D871B /* MyWeather_1_0UITests.m */; };
 		9CBA56FD1C717458005D871B /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CBA56FC1C717458005D871B /* ViewController.m */; };
@@ -68,6 +81,19 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9C6D421A1C72F76F00F3E656 /* baoyu@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "baoyu@2x.png"; sourceTree = "<group>"; };
+		9C6D421B1C72F76F00F3E656 /* dayu@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dayu@2x.png"; sourceTree = "<group>"; };
+		9C6D421C1C72F76F00F3E656 /* duoyun@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "duoyun@2x.png"; sourceTree = "<group>"; };
+		9C6D421D1C72F76F00F3E656 /* qing@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "qing@2x.png"; sourceTree = "<group>"; };
+		9C6D421E1C72F76F00F3E656 /* qingjianduoyun@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "qingjianduoyun@2x.png"; sourceTree = "<group>"; };
+		9C6D421F1C72F76F00F3E656 /* xiaoxue@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xiaoxue@2x.png"; sourceTree = "<group>"; };
+		9C6D42201C72F76F00F3E656 /* xiaoyu@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xiaoyu@2x.png"; sourceTree = "<group>"; };
+		9C6D42211C72F76F00F3E656 /* yin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "yin@2x.png"; sourceTree = "<group>"; };
+		9C6D42221C72F76F00F3E656 /* yinzhuanqing@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "yinzhuanqing@2x.png"; sourceTree = "<group>"; };
+		9C6D42231C72F76F00F3E656 /* yujiaxue@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "yujiaxue@2x.png"; sourceTree = "<group>"; };
+		9C6D42241C72F76F00F3E656 /* yuzhuanqing@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "yuzhuanqing@2x.png"; sourceTree = "<group>"; };
+		9C6D42251C72F76F00F3E656 /* zhenyu@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "zhenyu@2x.png"; sourceTree = "<group>"; };
+		9C6D42261C72F76F00F3E656 /* bingbao.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bingbao.png; sourceTree = "<group>"; };
 		9CBA56C41C7173E0005D871B /* SimpleWeather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimpleWeather.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9CBA56DD1C7173E1005D871B /* SimpleWeather.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SimpleWeather.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9CBA56E11C7173E1005D871B /* SimpleWeatherTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SimpleWeatherTests.m; sourceTree = "<group>"; };
@@ -176,6 +202,26 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9C6D42191C72F76F00F3E656 /* 天气 */ = {
+			isa = PBXGroup;
+			children = (
+				9C6D421A1C72F76F00F3E656 /* baoyu@2x.png */,
+				9C6D421B1C72F76F00F3E656 /* dayu@2x.png */,
+				9C6D421C1C72F76F00F3E656 /* duoyun@2x.png */,
+				9C6D421D1C72F76F00F3E656 /* qing@2x.png */,
+				9C6D421E1C72F76F00F3E656 /* qingjianduoyun@2x.png */,
+				9C6D421F1C72F76F00F3E656 /* xiaoxue@2x.png */,
+				9C6D42201C72F76F00F3E656 /* xiaoyu@2x.png */,
+				9C6D42211C72F76F00F3E656 /* yin@2x.png */,
+				9C6D42221C72F76F00F3E656 /* yinzhuanqing@2x.png */,
+				9C6D42231C72F76F00F3E656 /* yujiaxue@2x.png */,
+				9C6D42241C72F76F00F3E656 /* yuzhuanqing@2x.png */,
+				9C6D42251C72F76F00F3E656 /* zhenyu@2x.png */,
+				9C6D42261C72F76F00F3E656 /* bingbao.png */,
+			);
+			path = "天气";
+			sourceTree = "<group>";
+		};
 		9CBA56BB1C7173E0005D871B = {
 			isa = PBXGroup;
 			children = (
@@ -248,6 +294,7 @@
 		9CBA56FF1C717467005D871B /* Others */ = {
 			isa = PBXGroup;
 			children = (
+				9C6D42191C72F76F00F3E656 /* 天气 */,
 				9CBA57081C717467005D871B /* Lib */,
 				9CBA57001C717467005D871B /* AppDelegate.h */,
 				9CBA57011C717467005D871B /* AppDelegate.m */,
@@ -521,12 +568,25 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9C6D42331C72F76F00F3E656 /* yujiaxue@2x.png in Resources */,
 				9CBA57781C719AC4005D871B /* WeatherView.xib in Resources */,
+				9C6D42341C72F76F00F3E656 /* yuzhuanqing@2x.png in Resources */,
+				9C6D422E1C72F76F00F3E656 /* qingjianduoyun@2x.png in Resources */,
+				9C6D422F1C72F76F00F3E656 /* xiaoxue@2x.png in Resources */,
+				9C6D42311C72F76F00F3E656 /* yin@2x.png in Resources */,
 				9CBA577E1C71A415005D871B /* Cell.xib in Resources */,
 				9CBA570D1C717467005D871B /* Main.storyboard in Resources */,
+				9C6D422D1C72F76F00F3E656 /* qing@2x.png in Resources */,
+				9C6D422B1C72F76F00F3E656 /* dayu@2x.png in Resources */,
+				9C6D42321C72F76F00F3E656 /* yinzhuanqing@2x.png in Resources */,
 				9CBA570B1C717467005D871B /* Assets.xcassets in Resources */,
 				9CBA57671C71886D005D871B /* MJRefresh.bundle in Resources */,
 				9CBA570C1C717467005D871B /* LaunchScreen.storyboard in Resources */,
+				9C6D422A1C72F76F00F3E656 /* baoyu@2x.png in Resources */,
+				9C6D42351C72F76F00F3E656 /* zhenyu@2x.png in Resources */,
+				9C6D42361C72F76F00F3E656 /* bingbao.png in Resources */,
+				9C6D422C1C72F76F00F3E656 /* duoyun@2x.png in Resources */,
+				9C6D42301C72F76F00F3E656 /* xiaoyu@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
