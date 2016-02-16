@@ -35,7 +35,7 @@
     [self.weatherImg setImage:[WeatherView stringWithWeather:weather.nowCond]];
     
     self.scrollView.contentSize = CGSizeMake(self.frame.size.width, self.scrollView.frame.size.height * 2);
-    self.scrollView.showsHorizontalScrollIndicator = NO;
+//    self.scrollView.showsHorizontalScrollIndicator = NO;
     
     [self.tableView reloadData];
 }
@@ -106,8 +106,9 @@
     tableView.scrollEnabled = NO; //不可滚动
     cell.selectionStyle = UITableViewCellSelectionStyleNone; //不可选中
     cell.backgroundColor = [UIColor clearColor];
-
+    cell.textLabel.textColor = [UIColor whiteColor];
     
     return cell;
 }
+
 @end

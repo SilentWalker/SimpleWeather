@@ -70,6 +70,14 @@
         [weatherView.scrollView.mj_header endRefreshing];
     }];
     
+    
+    
+    UIImage *backImage = [UIImage imageNamed:[NSString stringWithFormat:@"%ld",(weatherView.tag  % 3)]];
+    UIImageView *backgroundImage = [[UIImageView alloc]initWithImage:backImage];
+    backgroundImage.frame = weatherView.bounds;
+    [weatherView insertSubview:backgroundImage atIndex:0];
+    
+//    weatherView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:[NSString stringWithFormat:@"%ld",((self.pageControl.currentPage + 1) % 3)]]];
     [self.mainScrollView addSubview:weatherView];
 }
 
