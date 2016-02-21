@@ -1,5 +1,5 @@
 # SimpleWeather
-My first app, provide a simple weather forecast function.
+My first app, realize a simple weather forecast function.
 
 Demo:
 
