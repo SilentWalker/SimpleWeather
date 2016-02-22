@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9C60B28B1C7AAE9A009A9B5F /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C60B28A1C7AAE9A009A9B5F /* libsqlite3.tbd */; };
+		9C60B28E1C7AAEC3009A9B5F /* WeatherTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C60B28D1C7AAEC3009A9B5F /* WeatherTool.m */; };
 		9C6D422A1C72F76F00F3E656 /* baoyu@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C6D421A1C72F76F00F3E656 /* baoyu@2x.png */; };
 		9C6D422B1C72F76F00F3E656 /* dayu@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C6D421B1C72F76F00F3E656 /* dayu@2x.png */; };
 		9C6D422C1C72F76F00F3E656 /* duoyun@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C6D421C1C72F76F00F3E656 /* duoyun@2x.png */; };
@@ -81,6 +83,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9C60B28A1C7AAE9A009A9B5F /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
+		9C60B28C1C7AAEC3009A9B5F /* WeatherTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeatherTool.h; sourceTree = "<group>"; };
+		9C60B28D1C7AAEC3009A9B5F /* WeatherTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeatherTool.m; sourceTree = "<group>"; };
 		9C6D421A1C72F76F00F3E656 /* baoyu@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "baoyu@2x.png"; sourceTree = "<group>"; };
 		9C6D421B1C72F76F00F3E656 /* dayu@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dayu@2x.png"; sourceTree = "<group>"; };
 		9C6D421C1C72F76F00F3E656 /* duoyun@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "duoyun@2x.png"; sourceTree = "<group>"; };
@@ -182,6 +187,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9C60B28B1C7AAE9A009A9B5F /* libsqlite3.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -303,6 +309,8 @@
 				9CBA57051C717467005D871B /* Main.storyboard */,
 				9CBA57071C717467005D871B /* Info.plist */,
 				9CBA57091C717467005D871B /* main.m */,
+				9C60B28C1C7AAEC3009A9B5F /* WeatherTool.h */,
+				9C60B28D1C7AAEC3009A9B5F /* WeatherTool.m */,
 			);
 			path = Others;
 			sourceTree = "<group>";
@@ -310,6 +318,7 @@
 		9CBA57081C717467005D871B /* Lib */ = {
 			isa = PBXGroup;
 			children = (
+				9C60B28A1C7AAE9A009A9B5F /* libsqlite3.tbd */,
 				9CBA576D1C719322005D871B /* Connection */,
 				9CBA572C1C71886D005D871B /* MJRefresh */,
 				9CBA57281C718854005D871B /* MBProgressHUD */,
@@ -625,6 +634,7 @@
 				9CBA57261C7186F5005D871B /* AFURLResponseSerialization.m in Sources */,
 				9CBA57701C719374005D871B /* WeatherData.m in Sources */,
 				9CBA570A1C717467005D871B /* AppDelegate.m in Sources */,
+				9C60B28E1C7AAEC3009A9B5F /* WeatherTool.m in Sources */,
 				9CBA575F1C71886D005D871B /* MJRefreshAutoNormalFooter.m in Sources */,
 				9CBA575B1C71886D005D871B /* MJRefreshComponent.m in Sources */,
 				9CBA570F1C717467005D871B /* main.m in Sources */,

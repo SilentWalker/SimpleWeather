@@ -10,6 +10,7 @@
 #import "WeatherData.h"
 #import "WeatherView.h"
 #import "MBProgressHUD.h"
+#import "WeatherTool.h"
 @interface ViewController : UIViewController
 
 
