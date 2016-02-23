@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9C1904661C7C78FE00F897D5 /* CheckNetworkStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C1904651C7C78FE00F897D5 /* CheckNetworkStatus.m */; };
+		9C1904691C7C81B800F897D5 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C1904681C7C81B800F897D5 /* Reachability.m */; };
 		9C60B28B1C7AAE9A009A9B5F /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C60B28A1C7AAE9A009A9B5F /* libsqlite3.tbd */; };
 		9C60B28E1C7AAEC3009A9B5F /* WeatherTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C60B28D1C7AAEC3009A9B5F /* WeatherTool.m */; };
 		9C6D422A1C72F76F00F3E656 /* baoyu@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C6D421A1C72F76F00F3E656 /* baoyu@2x.png */; };
@@ -83,9 +85,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9C1904641C7C78FE00F897D5 /* CheckNetworkStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckNetworkStatus.h; sourceTree = "<group>"; };
+		9C1904651C7C78FE00F897D5 /* CheckNetworkStatus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckNetworkStatus.m; sourceTree = "<group>"; };
+		9C1904671C7C81B800F897D5 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		9C1904681C7C81B800F897D5 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		9C60B28A1C7AAE9A009A9B5F /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
-		9C60B28C1C7AAEC3009A9B5F /* WeatherTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeatherTool.h; sourceTree = "<group>"; };
-		9C60B28D1C7AAEC3009A9B5F /* WeatherTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeatherTool.m; sourceTree = "<group>"; };
+		9C60B28C1C7AAEC3009A9B5F /* WeatherTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WeatherTool.h; path = ../WeatherTool.h; sourceTree = "<group>"; };
+		9C60B28D1C7AAEC3009A9B5F /* WeatherTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WeatherTool.m; path = ../WeatherTool.m; sourceTree = "<group>"; };
 		9C6D421A1C72F76F00F3E656 /* baoyu@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "baoyu@2x.png"; sourceTree = "<group>"; };
 		9C6D421B1C72F76F00F3E656 /* dayu@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dayu@2x.png"; sourceTree = "<group>"; };
 		9C6D421C1C72F76F00F3E656 /* duoyun@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "duoyun@2x.png"; sourceTree = "<group>"; };
@@ -300,8 +306,6 @@
 		9CBA56FF1C717467005D871B /* Others */ = {
 			isa = PBXGroup;
 			children = (
-				9C60B28C1C7AAEC3009A9B5F /* WeatherTool.h */,
-				9C60B28D1C7AAEC3009A9B5F /* WeatherTool.m */,
 				9C6D42191C72F76F00F3E656 /* 天气 */,
 				9CBA57081C717467005D871B /* Lib */,
 				9CBA57001C717467005D871B /* AppDelegate.h */,
@@ -318,11 +322,13 @@
 		9CBA57081C717467005D871B /* Lib */ = {
 			isa = PBXGroup;
 			children = (
-				9C60B28A1C7AAE9A009A9B5F /* libsqlite3.tbd */,
-				9CBA576D1C719322005D871B /* Connection */,
+				9CBA576D1C719322005D871B /* MyTools */,
 				9CBA572C1C71886D005D871B /* MJRefresh */,
 				9CBA57281C718854005D871B /* MBProgressHUD */,
 				9CBA57141C7186F5005D871B /* AFNetworking */,
+				9C60B28A1C7AAE9A009A9B5F /* libsqlite3.tbd */,
+				9C1904671C7C81B800F897D5 /* Reachability.h */,
+				9C1904681C7C81B800F897D5 /* Reachability.m */,
 			);
 			path = Lib;
 			sourceTree = "<group>";
@@ -462,13 +468,17 @@
 			path = Header;
 			sourceTree = "<group>";
 		};
-		9CBA576D1C719322005D871B /* Connection */ = {
+		9CBA576D1C719322005D871B /* MyTools */ = {
 			isa = PBXGroup;
 			children = (
+				9C60B28C1C7AAEC3009A9B5F /* WeatherTool.h */,
+				9C60B28D1C7AAEC3009A9B5F /* WeatherTool.m */,
 				9CBA57111C718641005D871B /* GetData.h */,
 				9CBA57121C718641005D871B /* GetData.m */,
+				9C1904641C7C78FE00F897D5 /* CheckNetworkStatus.h */,
+				9C1904651C7C78FE00F897D5 /* CheckNetworkStatus.m */,
 			);
-			name = Connection;
+			name = MyTools;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -629,6 +639,7 @@
 				9CBA575A1C71886D005D871B /* MJRefreshBackFooter.m in Sources */,
 				9CBA57B61C71ECD0005D871B /* SearchBarViewController.m in Sources */,
 				9CBA57641C71886D005D871B /* MJRefreshGifHeader.m in Sources */,
+				9C1904661C7C78FE00F897D5 /* CheckNetworkStatus.m in Sources */,
 				9CBA57611C71886D005D871B /* MJRefreshBackGifFooter.m in Sources */,
 				9CBA57661C71886D005D871B /* MJRefreshStateHeader.m in Sources */,
 				9CBA57261C7186F5005D871B /* AFURLResponseSerialization.m in Sources */,
@@ -653,6 +664,7 @@
 				9CBA57601C71886D005D871B /* MJRefreshAutoStateFooter.m in Sources */,
 				9CBA57591C71886D005D871B /* MJRefreshAutoFooter.m in Sources */,
 				9CBA57251C7186F5005D871B /* AFURLRequestSerialization.m in Sources */,
+				9C1904691C7C81B800F897D5 /* Reachability.m in Sources */,
 				9CBA575C1C71886D005D871B /* MJRefreshFooter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

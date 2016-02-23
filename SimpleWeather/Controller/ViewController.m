@@ -10,6 +10,7 @@
 #import "GetData.h"
 #import "MJRefresh.h"
 #import "SearchBarViewController.h"
+#import "CheckNetworkStatus.h"
 #define kWeatherOf(city) [NSString stringWithFormat:@"https://api.heweather.com/x3/weather?city=%@&key=1f5b5d067d7a47999cc549a90c7ef7c6",(city)]
 #define kKey @"city"
 @interface ViewController () <UIScrollViewDelegate>
@@ -23,7 +24,18 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [CheckNetworkStatus networkStatus];
     [self.view addSubview:self.mainScrollView];
+    [self loadInitialView];
+    [self addBtn];
+    [self.view addSubview:self.pageControl];
+    [self timecheck];
+
+}
+#pragma mark - 方法
+//加载初始页面
+- (void)loadInitialView
+{
     //取出本地缓存
     self.cityArray = [[WeatherTool queryWeatherData]mutableCopy];
     self.tagNum = self.cityArray.count;
@@ -41,13 +53,8 @@
         [self getWeatherDataOfCity:@"beijing" andTag:1];
         self.tagNum = 1;
     }
-    [self addBtn];
-    [self.view addSubview:self.pageControl];
-    
 
 }
-#pragma mark - 方法
-
 //绘制页面
 - (void)drawWeatherViewOfWidth: (CGFloat)width
 {
@@ -77,37 +84,49 @@
 
 - (void)getWeatherDataOfCity: (NSString *)city andTag: (NSInteger)tag
 {
-    [GetData request:kWeatherOf([city stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]]) andSussecs:^(id responseObject) {
-        
-        WeatherView *weatherView = [self.mainScrollView viewWithTag:tag];
-        if ([responseObject[@"HeWeather data service 3.0"][0][@"status"] isEqualToString:@"unknown city"]) {
-            //消息框提示
-            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-            hud.mode = MBProgressHUDModeText;
-            hud.label.text = NSLocalizedString(@"未找到可用城市", @"HUD message title");
-            hud.offset = CGPointMake(0, 0);
-            [hud hideAnimated:YES afterDelay:2.f];
+    //检测网络状态，有则访问，否则提示
+    if ([CheckNetworkStatus networkStatus]) {
+        [GetData request:kWeatherOf([city stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]]) andSussecs:^(id responseObject) {
             
-            //清理错误数据
-            [WeatherTool deleteWeatherData:tag];
-            self.tagNum -= 1;
-            [weatherView removeFromSuperview];
-
-            self.mainScrollView.contentSize = CGSizeMake(self.mainScrollView.contentSize.width - self.view.frame.size.width, 0);
-            self.pageControl.numberOfPages = self.mainScrollView.contentSize.width / self.view.frame.size.width;
-            [self.mainScrollView setContentOffset:CGPointMake(0, 0) animated:YES];
+            WeatherView *weatherView = [self.mainScrollView viewWithTag:tag];
+            if ([responseObject[@"HeWeather data service 3.0"][0][@"status"] isEqualToString:@"unknown city"]) {
+                //消息框提示
+                MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+                hud.mode = MBProgressHUDModeText;
+                hud.label.text = NSLocalizedString(@"未找到可用城市", @"HUD message title");
+                hud.offset = CGPointMake(0, 0);
+                [hud hideAnimated:YES afterDelay:2.f];
+                
+                //清理错误数据
+                [WeatherTool deleteWeatherData:tag];
+                self.tagNum -= 1;
+                [weatherView removeFromSuperview];
+                
+                self.mainScrollView.contentSize = CGSizeMake(self.mainScrollView.contentSize.width - self.view.frame.size.width, 0);
+                self.pageControl.numberOfPages = self.mainScrollView.contentSize.width / self.view.frame.size.width;
+                [self.mainScrollView setContentOffset:CGPointMake(0, 0) animated:YES];
+                
+                return ;
+            }
+            //添加天气数据,若存在则更新
+            [WeatherTool updateWeatherData:tag :responseObject];
+            [WeatherTool saveWeatherData:tag :responseObject];
             
-            return ;
-        }
-        //添加天气数据,若存在则更新
-        [WeatherTool updateWeatherData:tag :responseObject];
-        [WeatherTool saveWeatherData:tag :responseObject];
-        
-        [weatherView setWeatherConditionWithData:[WeatherData weatherWithArray:responseObject[@"HeWeather data service 3.0"]]];
-        
+            [weatherView setWeatherConditionWithData:[WeatherData weatherWithArray:responseObject[@"HeWeather data service 3.0"]]];
+            
         } andFailed:^(NSError *error) {
-        
-    }];
+            
+        }];
+    } else {
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        hud.mode = MBProgressHUDModeText;
+        hud.label.text = NSLocalizedString(@"无网络连接", @"HUD message title");
+        hud.offset = CGPointMake(0, 0);
+        [hud hideAnimated:YES afterDelay:2.f];
+    }
+    
+    
+    
 }
 
 //添加增减按钮
@@ -179,14 +198,45 @@
     }
     
 }
+
+- (void)timecheck
+{
+    NSDate *date = [NSDate date];
+
+    NSDateFormatter *dateformatter = [[NSDateFormatter alloc]init];
+    [dateformatter setDateFormat:@"yyyy-MM-dd HH:mm"];
+    NSString *str = self.cityArray[0][@"HeWeather data service 3.0"][0][@"basic"][@"update"][@"loc"];
+    NSDate *upDate = [dateformatter dateFromString:str];
+    //获取当前时间与上次更新时间的时间差
+    NSTimeInterval nowtime = [date timeIntervalSince1970];
+    NSTimeInterval uptime = [upDate timeIntervalSince1970];
+    
+    double timeGap = (nowtime - uptime) / 60;
+    if (timeGap > 70) {
+        WeatherView *view = [self.mainScrollView viewWithTag:self.pageControl.currentPage + 1];
+        [self getWeatherDataOfCity:view.cityLable.text andTag:self.pageControl.currentPage + 1];
+        self.cityArray = [NSMutableArray arrayWithCapacity:0];
+        self.cityArray = [[WeatherTool queryWeatherData]mutableCopy];
+        //消息框提示
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        hud.mode = MBProgressHUDModeText;
+        hud.label.text = NSLocalizedString(@"数据更新中", @"HUD message title");
+        hud.offset = CGPointMake(0, 0);
+        [hud hideAnimated:YES afterDelay:1.f];
+
+    }
+
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
+//滚动视图
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     self.pageControl.currentPage = self.mainScrollView.contentOffset.x / self.view.frame.size.width;
+    [self timecheck];
     
 }
 
