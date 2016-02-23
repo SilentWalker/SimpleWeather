@@ -300,6 +300,8 @@
 		9CBA56FF1C717467005D871B /* Others */ = {
 			isa = PBXGroup;
 			children = (
+				9C60B28C1C7AAEC3009A9B5F /* WeatherTool.h */,
+				9C60B28D1C7AAEC3009A9B5F /* WeatherTool.m */,
 				9C6D42191C72F76F00F3E656 /* 天气 */,
 				9CBA57081C717467005D871B /* Lib */,
 				9CBA57001C717467005D871B /* AppDelegate.h */,
@@ -309,8 +311,6 @@
 				9CBA57051C717467005D871B /* Main.storyboard */,
 				9CBA57071C717467005D871B /* Info.plist */,
 				9CBA57091C717467005D871B /* main.m */,
-				9C60B28C1C7AAEC3009A9B5F /* WeatherTool.h */,
-				9C60B28D1C7AAEC3009A9B5F /* WeatherTool.m */,
 			);
 			path = Others;
 			sourceTree = "<group>";

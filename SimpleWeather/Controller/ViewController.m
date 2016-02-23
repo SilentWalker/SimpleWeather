@@ -16,7 +16,7 @@
 @property (nonatomic, strong) UIScrollView *mainScrollView;
 @property (nonatomic, strong) UIPageControl *pageControl;
 @property (nonatomic, strong) NSMutableArray *cityArray;
-@property (nonatomic, strong) NSMutableArray *localCache;
+@property (nonatomic, assign) NSInteger tagNum;
 @end
 
 @implementation ViewController
@@ -26,7 +26,7 @@
     [self.view addSubview:self.mainScrollView];
     //取出本地缓存
     self.cityArray = [[WeatherTool queryWeatherData]mutableCopy];
-    
+    self.tagNum = self.cityArray.count;
     if (self.cityArray.count != 0) {
         [self.cityArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             
@@ -36,44 +36,13 @@
         }];
         [self.mainScrollView setContentOffset:CGPointMake(0, 0)];
     }else{
+        //默认页面为北京天气
         [self drawWeatherViewOfWidth:self.view.frame.size.width];
+        [self getWeatherDataOfCity:@"beijing" andTag:1];
+        self.tagNum = 1;
     }
     [self addBtn];
     [self.view addSubview:self.pageControl];
-#pragma mark - 暂存
-
-//    self.cityArray = [[[NSUserDefaults standardUserDefaults]objectForKey:kKey]mutableCopy];
-//    if (self.cityArray.count != 0) {
-//        [self.cityArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-//            NSLog(@"%@",obj);
-//            [self drawWeatherViewOfWidth:self.view.frame.size.width * (idx + 1)];
-//            [self getWeatherDataOfCity:obj andTag:idx + 1];
-//            
-//        }];
-//        [self.mainScrollView setContentOffset:CGPointMake(0, 0) animated:NO];
-//        
-//        
-//        
-//    }else{
-//        //设置默认城市为北京
-//        [self.cityArray addObject:@"北京"];
-//        [self drawWeatherViewOfWidth:self.view.frame.size.width];
-//        [self getWeatherDataOfCity:[self.cityArray objectAtIndex:0] andTag:1];
-//
-//    }
-////    [self getWeatherDataOfCity:@"yuyao" andTag:1];
-//   
-//    [self addBtn];
-//    [self.view addSubview:self.pageControl];
-    
-#pragma mark - test field
-//    NSArray *queryArray = [WeatherTool queryWeatherData];
-//    if (queryArray.count != 0) {
-//        [queryArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-//            NSLog(@"%@",queryArray[idx]);
-//            
-//        }];
-//    }
     
 
 }
@@ -91,7 +60,7 @@
     
     [weatherView setFrame:CGRectMake(width - self.view.frame.size.width, 0, self.view.frame.size.width, self.view.frame.size.height)];
     weatherView.tag = self.pageControl.numberOfPages;
-//下拉刷新
+    //添加下拉刷新方法
     weatherView.scrollView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         [self getWeatherDataOfCity:weatherView.cityLable.text andTag:self.pageControl.currentPage + 1];
         [weatherView.scrollView.mj_header endRefreshing];
@@ -119,20 +88,23 @@
             hud.offset = CGPointMake(0, 0);
             [hud hideAnimated:YES afterDelay:2.f];
             
-            [self.cityArray removeObject:city];
+            //清理错误数据
+            [WeatherTool deleteWeatherData:tag];
+            self.tagNum -= 1;
             [weatherView removeFromSuperview];
-            [[NSUserDefaults standardUserDefaults] setObject:self.cityArray forKey:kKey];
-            
+
             self.mainScrollView.contentSize = CGSizeMake(self.mainScrollView.contentSize.width - self.view.frame.size.width, 0);
             self.pageControl.numberOfPages = self.mainScrollView.contentSize.width / self.view.frame.size.width;
             [self.mainScrollView setContentOffset:CGPointMake(0, 0) animated:YES];
             
             return ;
         }
-      //添加天气数据
+        //添加天气数据,若存在则更新
+        [WeatherTool updateWeatherData:tag :responseObject];
         [WeatherTool saveWeatherData:tag :responseObject];
-        [WeatherTool updataWeatherData:tag :responseObject];
+        
         [weatherView setWeatherConditionWithData:[WeatherData weatherWithArray:responseObject[@"HeWeather data service 3.0"]]];
+        
         } andFailed:^(NSError *error) {
         
     }];
@@ -165,40 +137,45 @@
     SearchBarViewController *searchView = [[SearchBarViewController alloc]init];
     [self presentViewController:searchView animated:YES completion:^{
        [searchView searchCityName:^(NSString *city) {
-           [self.cityArray addObject:city];
-           NSLog(@"%@",self.cityArray);
+           //tag数量加一，创建对应记录，等待传入数据更新
+           self.tagNum += 1;
+
            [self drawWeatherViewOfWidth:self.mainScrollView.contentSize.width + self.view.frame.size.width];
-           [self getWeatherDataOfCity:city andTag:self.cityArray.count];
-           [[NSUserDefaults standardUserDefaults]setValue:self.cityArray forKey:kKey];
+           [self getWeatherDataOfCity:city andTag:self.tagNum];
+           [WeatherTool saveWeatherData:self.tagNum :nil];
+
        }];
     }];
 
 }
+/**
+ *  删除页面，同时删除数据库对应数据
+ */
 - (void)deleteView
 {
-    if (self.cityArray.count == 0) {
+
+    if (self.tagNum == 0) {
         return;
     }else{
-    [self.cityArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        if (idx == self.pageControl.currentPage) {
-            WeatherView *view = [self.mainScrollView viewWithTag:idx +1];
-            [view removeFromSuperview];
-        }else if (idx > self.pageControl.currentPage)
-        {
-            WeatherView *view = [self.mainScrollView viewWithTag:idx +1];
-            [view setFrame:CGRectMake(view.frame.origin.x - view.frame.size.width, 0, view.frame.size.width, view.frame.size.height)];
-            view.tag = idx;
-        }
-    }];
-        [self.cityArray removeObjectAtIndex:self.pageControl.currentPage];
-//从数据库删除
-        [WeatherTool deleteWeatherData:self.pageControl.currentPage + 1];
-
-        NSLog(@"%@",self.cityArray);
-        self.mainScrollView.contentSize = CGSizeMake(self.mainScrollView.contentSize.width - self.view.frame.size.width, 0);
-        self.pageControl.numberOfPages = self.mainScrollView.contentSize.width / self.view.frame.size.width;
-        [[NSUserDefaults standardUserDefaults]setObject:self.cityArray forKey:kKey];
-
+        NSInteger i;
+        for (i = 0; i < self.tagNum; i++) {
+            //删除页面及数据
+            if (i == self.pageControl.currentPage) {
+                WeatherView *view = [self.mainScrollView viewWithTag:i + 1];
+                [view removeFromSuperview];
+                [WeatherTool deleteWeatherData:i + 1];
+            //移动后续页面tag及数据库记录
+            }else if (i > self.pageControl.currentPage)
+            {
+                WeatherView *view = [self.mainScrollView viewWithTag:i +1];
+                [view setFrame:CGRectMake(view.frame.origin.x - view.frame.size.width, 0, view.frame.size.width, view.frame.size.height)];
+                view.tag = i;
+                [WeatherTool moveWeatherData:i + 1];
+            }
+    }
+    self.tagNum -= 1;
+    self.mainScrollView.contentSize = CGSizeMake(self.mainScrollView.contentSize.width - self.view.frame.size.width, 0);
+    self.pageControl.numberOfPages = self.mainScrollView.contentSize.width / self.view.frame.size.width;
     }
     
 }
@@ -212,6 +189,8 @@
     self.pageControl.currentPage = self.mainScrollView.contentOffset.x / self.view.frame.size.width;
     
 }
+
+
 #pragma mark - 懒加载
 
 
@@ -249,5 +228,12 @@
         _cityArray = [[NSMutableArray alloc]initWithCapacity:0];
     }
     return _cityArray;
+}
+-(NSInteger)tagNum
+{
+    if (!_tagNum) {
+        _tagNum = 1;
+    }
+    return _tagNum;
 }
 @end

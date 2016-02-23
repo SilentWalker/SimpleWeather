@@ -13,5 +13,6 @@
 + (void)saveWeatherData :(NSInteger)cityid :(NSDictionary *)weatherdic;
 + (NSMutableArray *)queryWeatherData;
 + (void)deleteWeatherData :(NSInteger)cityid;
-+ (void)updataWeatherData :(NSInteger)cityid :(NSDictionary *)weatherdic;
++ (void)updateWeatherData :(NSInteger)cityid :(NSDictionary *)weatherdic;
++ (void)moveWeatherData :(NSInteger)cityid;
 @end
