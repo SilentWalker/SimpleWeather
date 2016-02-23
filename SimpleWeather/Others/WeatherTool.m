@@ -23,7 +23,7 @@ static sqlite3 *_db;
         NSLog(@"打开数据库成功");
         //创建表
         //拼接sql语句,执行
-        NSString *creatTable = @"CREATE TABLE IF NOT EXISTS t_weather (id integer PRIMARY KEY AUTOINCREMENT, weatherjson text NOT NULL); ";
+        NSString *creatTable = @"CREATE TABLE IF NOT EXISTS t_weather (id integer PRIMARY KEY NOT NULL, weatherdic blob NOT NULL); ";
         char *errorMsg = NULL;
         if (sqlite3_exec(_db, creatTable.UTF8String, NULL, NULL, &errorMsg) == SQLITE_OK) {
             NSLog(@"创建成功");
@@ -36,32 +36,44 @@ static sqlite3 *_db;
     }
     
 }
-+ (void)saveWeatherData:(NSString *)weatherjson
++ (void)saveWeatherData:(NSInteger)cityid :(NSDictionary *)weatherdic
 {
-    //insert语句
-    NSString *sql = [NSString stringWithFormat:@"INSERT INTO t_weather (weatherjson) VALUES ('%@');",weatherjson];
-    char *errorMsg = NULL;
-    if (sqlite3_exec(_db, sql.UTF8String, NULL, NULL, &errorMsg) == SQLITE_OK) {
-        NSLog(@"保存成功");
+    //反解析JSON，绑定blob实现插入
+    NSData *data = [NSJSONSerialization dataWithJSONObject:weatherdic options:NSJSONWritingPrettyPrinted error:nil];
+    NSString *sql = [NSString stringWithFormat:@"INSERT INTO t_weather VALUES (%ld,?);",cityid];
+    sqlite3_stmt *savestmt;
+    if (sqlite3_prepare_v2(_db, sql.UTF8String, -1, &savestmt, NULL) == SQLITE_OK) {
+        sqlite3_bind_blob(savestmt, 1, [data bytes], (int)[data length], NULL);
+        if (sqlite3_step(savestmt) == SQLITE_DONE) {
+            NSLog(@"保存成功");
+        }
+        sqlite3_finalize(savestmt);
     } else {
-        NSLog(@"保存失败--%s--%d",errorMsg,__LINE__);
+        NSLog(@"保存失败");
     }
+    
 }
 
-+ (NSArray *)queryWeatherData
++ (NSMutableArray *)queryWeatherData
 {
     NSMutableArray *cityinfo = [NSMutableArray array];
-    const char *sql = "SELECT weatherjson FROM t_weather;";
-    sqlite3_stmt *stmt = NULL;
-    NSString *temp = @"";
+    const char *sql = "SELECT weatherdic FROM t_weather;";
+    sqlite3_stmt *stmt;
     //准备查询
     if (sqlite3_prepare_v2(_db, sql, -1, &stmt, NULL) == SQLITE_OK) {
         NSLog(@"查询成功");
         //stmt步进
         while (sqlite3_step(stmt) == SQLITE_ROW) {
-            const unsigned char *cityjson = sqlite3_column_text(stmt, 0);
-            temp = [temp initWithUTF8String:(const char*)cityjson];
-            [cityinfo addObject:temp];
+            //取出位于第0列存储的blob长度
+            int length = sqlite3_column_bytes(stmt, 0);
+            //取出位于第0列存储的blob数据
+            const void *bytes = sqlite3_column_blob(stmt, 0);
+            //重新组合为NSData
+            NSData *data = [[NSData alloc]initWithBytes:bytes length:length];
+            NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+//            NSLog(@"%@",dic);
+//            NSLog(@"%@",data);
+            [cityinfo addObject:dic];
         }
         
     } else {
@@ -81,15 +93,18 @@ static sqlite3 *_db;
     }
 }
 
-+ (void)updataWeatherData:(NSInteger)cityid :(NSString *)weatherjson
++ (void)updataWeatherData:(NSInteger)cityid :(NSDictionary *)weatherdic
 {
-    NSString *sql = [NSString stringWithFormat:@"UPDATA t_weather SET weatherjson = '%@' WHERE id = %ld",weatherjson,cityid];
-    char *errorMsg = NULL;
-    if (sqlite3_exec(_db, sql.UTF8String, NULL, NULL, &errorMsg)) {
-        NSLog(@"修改成功");
-    } else {
-        NSLog(@"修改失败--%s--%d",errorMsg,__LINE__);
+    NSString *sql = [NSString stringWithFormat:@"UPDATA t_weather SET weaatherdic = ? WHERE id = %ld",cityid];
+    sqlite3_stmt *stmt;
+    NSData *data = [NSJSONSerialization dataWithJSONObject:weatherdic options:NSJSONWritingPrettyPrinted error:nil];
+    if (sqlite3_prepare_v2(_db, sql.UTF8String, -1, &stmt, NULL) == SQLITE_OK) {
+        sqlite3_bind_blob(stmt, 1, [data bytes], (int)[data length], NULL);
+        if (sqlite3_step(stmt) == SQLITE_OK) {
+            NSLog(@"更新成功");
+        } else {
+            NSLog(@"更新失败");
+        }
     }
-    
 }
 @end

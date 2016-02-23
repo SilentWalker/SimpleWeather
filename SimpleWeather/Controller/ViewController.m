@@ -16,6 +16,7 @@
 @property (nonatomic, strong) UIScrollView *mainScrollView;
 @property (nonatomic, strong) UIPageControl *pageControl;
 @property (nonatomic, strong) NSMutableArray *cityArray;
+@property (nonatomic, strong) NSMutableArray *localCache;
 @end
 
 @implementation ViewController
@@ -23,31 +24,47 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.view addSubview:self.mainScrollView];
+    //取出本地缓存
+    self.cityArray = [[WeatherTool queryWeatherData]mutableCopy];
     
-    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"blue.jpg"]];
-    self.cityArray = [[[NSUserDefaults standardUserDefaults]objectForKey:kKey]mutableCopy];
     if (self.cityArray.count != 0) {
         [self.cityArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            NSLog(@"%@",obj);
-            [self drawWeatherViewOfWidth:self.view.frame.size.width * (idx + 1)];
-            [self getWeatherDataOfCity:obj andTag:idx + 1];
             
+            [self drawWeatherViewOfWidth:self.view.frame.size.width * (idx + 1)];
+            WeatherView *weatherview = [self.mainScrollView viewWithTag:(idx + 1)];
+            [weatherview setWeatherConditionWithData:[WeatherData weatherWithArray:self.cityArray[idx][@"HeWeather data service 3.0"]]];
         }];
-        [self.mainScrollView setContentOffset:CGPointMake(0, 0) animated:NO];
-        
-        
-        
+        [self.mainScrollView setContentOffset:CGPointMake(0, 0)];
     }else{
-        //设置默认城市为北京
-        [self.cityArray addObject:@"北京"];
         [self drawWeatherViewOfWidth:self.view.frame.size.width];
-        [self getWeatherDataOfCity:[self.cityArray objectAtIndex:0] andTag:1];
-      
     }
-//    [self getWeatherDataOfCity:@"yuyao" andTag:1];
-   
     [self addBtn];
     [self.view addSubview:self.pageControl];
+#pragma mark - 暂存
+
+//    self.cityArray = [[[NSUserDefaults standardUserDefaults]objectForKey:kKey]mutableCopy];
+//    if (self.cityArray.count != 0) {
+//        [self.cityArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+//            NSLog(@"%@",obj);
+//            [self drawWeatherViewOfWidth:self.view.frame.size.width * (idx + 1)];
+//            [self getWeatherDataOfCity:obj andTag:idx + 1];
+//            
+//        }];
+//        [self.mainScrollView setContentOffset:CGPointMake(0, 0) animated:NO];
+//        
+//        
+//        
+//    }else{
+//        //设置默认城市为北京
+//        [self.cityArray addObject:@"北京"];
+//        [self drawWeatherViewOfWidth:self.view.frame.size.width];
+//        [self getWeatherDataOfCity:[self.cityArray objectAtIndex:0] andTag:1];
+//
+//    }
+////    [self getWeatherDataOfCity:@"yuyao" andTag:1];
+//   
+//    [self addBtn];
+//    [self.view addSubview:self.pageControl];
     
 #pragma mark - test field
 //    NSArray *queryArray = [WeatherTool queryWeatherData];
@@ -60,7 +77,7 @@
     
 
 }
-
+#pragma mark - 方法
 
 //绘制页面
 - (void)drawWeatherViewOfWidth: (CGFloat)width
@@ -113,7 +130,8 @@
             return ;
         }
       //添加天气数据
-//        [WeatherTool saveWeatherData:responseObject];
+        [WeatherTool saveWeatherData:tag :responseObject];
+        [WeatherTool updataWeatherData:tag :responseObject];
         [weatherView setWeatherConditionWithData:[WeatherData weatherWithArray:responseObject[@"HeWeather data service 3.0"]]];
         } andFailed:^(NSError *error) {
         
@@ -154,8 +172,6 @@
            [[NSUserDefaults standardUserDefaults]setValue:self.cityArray forKey:kKey];
        }];
     }];
-//     self.mainScrollView.contentOffset = CGPointMake(self.mainScrollView.contentSize.width, 0);
-//    self.mainScrollView.contentSize = CGSizeMake(self.mainScrollView.contentSize.width + self.view.frame.size.width, 0);
 
 }
 - (void)deleteView
@@ -174,11 +190,15 @@
             view.tag = idx;
         }
     }];
-    [self.cityArray removeObjectAtIndex:self.pageControl.currentPage];
-    NSLog(@"%@",self.cityArray);
-    self.mainScrollView.contentSize = CGSizeMake(self.mainScrollView.contentSize.width - self.view.frame.size.width, 0);
-    self.pageControl.numberOfPages = self.mainScrollView.contentSize.width / self.view.frame.size.width;
-    [[NSUserDefaults standardUserDefaults]setObject:self.cityArray forKey:kKey];
+        [self.cityArray removeObjectAtIndex:self.pageControl.currentPage];
+//从数据库删除
+        [WeatherTool deleteWeatherData:self.pageControl.currentPage + 1];
+
+        NSLog(@"%@",self.cityArray);
+        self.mainScrollView.contentSize = CGSizeMake(self.mainScrollView.contentSize.width - self.view.frame.size.width, 0);
+        self.pageControl.numberOfPages = self.mainScrollView.contentSize.width / self.view.frame.size.width;
+        [[NSUserDefaults standardUserDefaults]setObject:self.cityArray forKey:kKey];
+
     }
     
 }

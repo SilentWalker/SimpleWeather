@@ -10,8 +10,8 @@
 #import <sqlite3.h>
 #import "WeatherData.h"
 @interface WeatherTool : NSObject
-+ (void)saveWeatherData :(NSString *)weatherjson;
-+ (NSArray *)queryWeatherData;
++ (void)saveWeatherData :(NSInteger)cityid :(NSDictionary *)weatherdic;
++ (NSMutableArray *)queryWeatherData;
 + (void)deleteWeatherData :(NSInteger)cityid;
-+ (void)updataWeatherData :(NSInteger)cityid :(NSString *)weatherjson;
++ (void)updataWeatherData :(NSInteger)cityid :(NSDictionary *)weatherdic;
 @end
