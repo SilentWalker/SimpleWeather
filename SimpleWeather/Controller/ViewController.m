@@ -29,7 +29,6 @@
     [self loadInitialView];
     [self addBtn];
     [self.view addSubview:self.pageControl];
-    [self timecheck];
 
 }
 #pragma mark - 方法
@@ -47,11 +46,14 @@
             [weatherview setWeatherConditionWithData:[WeatherData weatherWithArray:self.cityArray[idx][@"HeWeather data service 3.0"]]];
         }];
         [self.mainScrollView setContentOffset:CGPointMake(0, 0)];
+        //检测时间以决定刷新
+        [self timecheck];
     }else{
         //默认页面为北京天气
         [self drawWeatherViewOfWidth:self.view.frame.size.width];
         [self getWeatherDataOfCity:@"beijing" andTag:1];
         self.tagNum = 1;
+
     }
 
 }
@@ -75,10 +77,11 @@
     
     
     // 以3张图片轮流设置背景
-    UIImage *backImage = [UIImage imageNamed:[NSString stringWithFormat:@"%ld",(weatherView.tag  % 3)]];
-    UIImageView *backgroundImage = [[UIImageView alloc]initWithImage:backImage];
-    backgroundImage.frame = weatherView.bounds;
-    [weatherView insertSubview:backgroundImage atIndex:0];
+//    UIImage *backImage = [UIImage imageNamed:[NSString stringWithFormat:@"%ld",(weatherView.tag  % 3)]];
+//    UIImageView *backgroundImage = [[UIImageView alloc]initWithImage:backImage];
+//    backgroundImage.frame = weatherView.bounds;
+//    [weatherView insertSubview:backgroundImage atIndex:0];
+    weatherView.backgroundColor = [UIColor blackColor];
     [self.mainScrollView addSubview:weatherView];
 }
 
@@ -201,31 +204,40 @@
 
 - (void)timecheck
 {
-    NSDate *date = [NSDate date];
+    //若有网络则检测
+    if ([CheckNetworkStatus networkStatus]) {
+        NSDate *date = [NSDate date];
+        NSDateFormatter *dateformatter = [[NSDateFormatter alloc]init];
+        [dateformatter setDateFormat:@"yyyy-MM-dd HH:mm"];
+        NSString *str = self.cityArray[0][@"HeWeather data service 3.0"][0][@"basic"][@"update"][@"loc"];
+        NSDate *upDate = [dateformatter dateFromString:str];
+        //获取当前时间与上次更新时间的时间差
+        NSTimeInterval nowtime = [date timeIntervalSince1970];
+        NSTimeInterval uptime = [upDate timeIntervalSince1970];
+        
+        double timeGap = (nowtime - uptime) / 60;
+        //若大于70分钟则刷新
+        if (timeGap > 70) {
+            //消息框提示
+            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+            hud.mode = MBProgressHUDModeText;
+            hud.label.text = NSLocalizedString(@"数据更新中", @"HUD message title");
+            hud.offset = CGPointMake(0, 0);
+            [hud hideAnimated:YES afterDelay:1.f];
 
-    NSDateFormatter *dateformatter = [[NSDateFormatter alloc]init];
-    [dateformatter setDateFormat:@"yyyy-MM-dd HH:mm"];
-    NSString *str = self.cityArray[0][@"HeWeather data service 3.0"][0][@"basic"][@"update"][@"loc"];
-    NSDate *upDate = [dateformatter dateFromString:str];
-    //获取当前时间与上次更新时间的时间差
-    NSTimeInterval nowtime = [date timeIntervalSince1970];
-    NSTimeInterval uptime = [upDate timeIntervalSince1970];
-    
-    double timeGap = (nowtime - uptime) / 60;
-    if (timeGap > 70) {
-        WeatherView *view = [self.mainScrollView viewWithTag:self.pageControl.currentPage + 1];
-        [self getWeatherDataOfCity:view.cityLable.text andTag:self.pageControl.currentPage + 1];
-        self.cityArray = [NSMutableArray arrayWithCapacity:0];
-        self.cityArray = [[WeatherTool queryWeatherData]mutableCopy];
-        //消息框提示
-        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        hud.mode = MBProgressHUDModeText;
-        hud.label.text = NSLocalizedString(@"数据更新中", @"HUD message title");
-        hud.offset = CGPointMake(0, 0);
-        [hud hideAnimated:YES afterDelay:1.f];
+             
+            for (int i = 0; i < self.cityArray.count; i++) {
+                WeatherView *view = [self.mainScrollView viewWithTag:i + 1];
+                [self getWeatherDataOfCity:view.cityLable.text andTag:i + 1];
+            }
+            
+            [self.cityArray removeAllObjects];
+            self.cityArray = [[WeatherTool queryWeatherData]mutableCopy];
+            
+        }
 
     }
-
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -236,7 +248,6 @@
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     self.pageControl.currentPage = self.mainScrollView.contentOffset.x / self.view.frame.size.width;
-    [self timecheck];
     
 }
 

@@ -11,6 +11,8 @@
 		9C1904691C7C81B800F897D5 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C1904681C7C81B800F897D5 /* Reachability.m */; };
 		9C60B28B1C7AAE9A009A9B5F /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C60B28A1C7AAE9A009A9B5F /* libsqlite3.tbd */; };
 		9C60B28E1C7AAEC3009A9B5F /* WeatherTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C60B28D1C7AAEC3009A9B5F /* WeatherTool.m */; };
+		9C60EFC01C7D48030003967F /* WeeklyForecast.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C60EFBF1C7D48030003967F /* WeeklyForecast.m */; };
+		9C60EFC21C7D481B0003967F /* WeeklyForecast.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9C60EFC11C7D481B0003967F /* WeeklyForecast.xib */; };
 		9C6D422A1C72F76F00F3E656 /* baoyu@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C6D421A1C72F76F00F3E656 /* baoyu@2x.png */; };
 		9C6D422B1C72F76F00F3E656 /* dayu@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C6D421B1C72F76F00F3E656 /* dayu@2x.png */; };
 		9C6D422C1C72F76F00F3E656 /* duoyun@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C6D421C1C72F76F00F3E656 /* duoyun@2x.png */; };
@@ -92,6 +94,9 @@
 		9C60B28A1C7AAE9A009A9B5F /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		9C60B28C1C7AAEC3009A9B5F /* WeatherTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WeatherTool.h; path = ../WeatherTool.h; sourceTree = "<group>"; };
 		9C60B28D1C7AAEC3009A9B5F /* WeatherTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WeatherTool.m; path = ../WeatherTool.m; sourceTree = "<group>"; };
+		9C60EFBE1C7D48030003967F /* WeeklyForecast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeeklyForecast.h; sourceTree = "<group>"; };
+		9C60EFBF1C7D48030003967F /* WeeklyForecast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeeklyForecast.m; sourceTree = "<group>"; };
+		9C60EFC11C7D481B0003967F /* WeeklyForecast.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WeeklyForecast.xib; sourceTree = "<group>"; };
 		9C6D421A1C72F76F00F3E656 /* baoyu@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "baoyu@2x.png"; sourceTree = "<group>"; };
 		9C6D421B1C72F76F00F3E656 /* dayu@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dayu@2x.png"; sourceTree = "<group>"; };
 		9C6D421C1C72F76F00F3E656 /* duoyun@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "duoyun@2x.png"; sourceTree = "<group>"; };
@@ -342,6 +347,9 @@
 				9CBA577F1C71A478005D871B /* Cell.h */,
 				9CBA57801C71A478005D871B /* Cell.m */,
 				9CBA577D1C71A415005D871B /* Cell.xib */,
+				9C60EFBE1C7D48030003967F /* WeeklyForecast.h */,
+				9C60EFBF1C7D48030003967F /* WeeklyForecast.m */,
+				9C60EFC11C7D481B0003967F /* WeeklyForecast.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -598,6 +606,7 @@
 				9C6D422D1C72F76F00F3E656 /* qing@2x.png in Resources */,
 				9C6D422B1C72F76F00F3E656 /* dayu@2x.png in Resources */,
 				9C6D42321C72F76F00F3E656 /* yinzhuanqing@2x.png in Resources */,
+				9C60EFC21C7D481B0003967F /* WeeklyForecast.xib in Resources */,
 				9CBA570B1C717467005D871B /* Assets.xcassets in Resources */,
 				9CBA57671C71886D005D871B /* MJRefresh.bundle in Resources */,
 				9CBA570C1C717467005D871B /* LaunchScreen.storyboard in Resources */,
@@ -630,6 +639,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9C60EFC01C7D48030003967F /* WeeklyForecast.m in Sources */,
 				9CBA57691C71886D005D871B /* UIScrollView+MJExtension.m in Sources */,
 				9CBA57811C71A478005D871B /* Cell.m in Sources */,
 				9CBA57681C71886D005D871B /* MJRefreshConst.m in Sources */,
