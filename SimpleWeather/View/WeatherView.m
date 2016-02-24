@@ -9,7 +9,6 @@
 
 #import "WeatherView.h"
 #import "WeatherData.h"
-#import "Cell.h"
 @implementation WeatherView
 
 /*
@@ -27,26 +26,114 @@
     self.nowTmp.text = weather.nowTmp;
     self.winddir.text = weather.winddir;
     self.cityLable.text = weather.cityName;
-//    UINavigationBar *navi = [[UINavigationBar alloc]initWithFrame:CGRectMake(0, 20, self.frame.size.width, 44)];
-//    UINavigationItem *naviIten = [[UINavigationItem alloc]initWithTitle:weather.cityName];
-//    [navi pushNavigationItem:naviIten animated:NO];
-//    [self addSubview:navi];
     self.weatherImg.contentMode = UIViewContentModeScaleAspectFill;
     [self.weatherImg setImage:[WeatherView stringWithWeather:weather.nowCond]];
     
     self.scrollView.contentSize = CGSizeMake(self.frame.size.width, self.scrollView.frame.size.height * 2);
-//    self.scrollView.showsHorizontalScrollIndicator = NO;
     
-    [self.tableView reloadData];
+    //根据tag取出对应的天气格子，赋予属性
+    for (int i = 100; i<106; i++) {
+        WeeklyForecast *view = [self viewWithTag:i];
+        weather = data[i-99];
+        
+        view.date.text = weather.date;
+        view.maxTmp.text = weather.maxTmp;
+        view.minTmp.text = weather.minTmp;
+        view.dayCond.text = weather.dayCond;
+        view.nightCond.text = weather.nightCond;
+        
+    }
+    [self drawLine:data];
 }
+
+- (void)drawLine: (NSArray *)data
+{
+    WeatherData *weather;
+    NSMutableArray *maxTmp = [NSMutableArray array];
+    NSMutableArray *minTmp = [NSMutableArray array];
+    NSMutableArray *maxPoints = [NSMutableArray array];
+    NSMutableArray *minPoints = [NSMutableArray array];
+    for (int i = 1; i< 7; i++) {
+        weather = data[i];
+        [maxTmp addObject:weather.maxTmp];
+        [minTmp addObject:weather.minTmp];
+    }
+    NSInteger max = [[maxTmp valueForKeyPath:@"@max.intValue"]integerValue];
+    NSInteger min = [[minTmp valueForKeyPath:@"@min.intValue"]integerValue];
+    double firstX = self.pathView.frame.size.width / 12;
+    double xLenth = firstX * 2;
+    double yLenth = self.pathView.frame.size.height;
+    double gap = yLenth / (max - min);
+    CGPoint point;
+    for (int i = 0; i<6; i++) {
+        NSString *maxtemp = maxTmp[i];
+        NSInteger maxi = maxtemp.intValue;
+        NSString *mintemp = minTmp[i];
+        NSInteger mini = mintemp.intValue;
+        point = CGPointMake(firstX + i * xLenth, (max - maxi) * gap);
+        [maxPoints addObject:[NSValue valueWithCGPoint:point]];
+        point = CGPointMake(firstX + i * xLenth, (max - mini) * gap);
+        [minPoints addObject:[NSValue valueWithCGPoint:point]];
+    }
+    UIBezierPath *maxBezier = [UIBezierPath bezierPath];
+    [maxPoints enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        CGPoint point = [obj CGPointValue];
+        [maxBezier addLineToPoint:point];
+        
+        CGRect rect;
+        rect.origin.x = point.x - 1.5;
+        rect.origin.y = point.y - 1.5;
+        rect.size.width = 4;
+        rect.size.height = 4;
+
+        UIBezierPath *arc= [UIBezierPath bezierPathWithOvalInRect:rect];
+        [maxBezier appendPath:arc];
+
+        
+    }];
+    
+    CAShapeLayer *lineLayer = [CAShapeLayer layer];
+    lineLayer.frame = CGRectMake(0, 0 , 375, 165);
+    lineLayer.fillColor = [UIColor whiteColor].CGColor;
+    lineLayer.path = maxBezier.CGPath;
+    lineLayer.strokeColor = [UIColor whiteColor].CGColor;
+    [self.pathView.layer addSublayer:lineLayer];
+
+    UIBezierPath *minBezier = [UIBezierPath bezierPath];
+    [minPoints enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        CGPoint point = [obj CGPointValue];
+        [minBezier addLineToPoint:point];
+        
+        CGRect rect;
+        rect.origin.x = point.x - 1.5;
+        rect.origin.y = point.y - 1.5;
+        rect.size.width = 4;
+        rect.size.height = 4;
+        
+        UIBezierPath *arc= [UIBezierPath bezierPathWithOvalInRect:rect];
+        [minBezier appendPath:arc];
+        
+    }];
+    CAShapeLayer *minlineLayer = [CAShapeLayer layer];
+    minlineLayer.frame = CGRectMake(0, 0 , 375, 165);
+    minlineLayer.fillColor = [UIColor whiteColor].CGColor;
+    minlineLayer.path = minBezier.CGPath;
+    minlineLayer.strokeColor = [UIColor whiteColor].CGColor;
+    [self.pathView.layer addSublayer:minlineLayer];
+  
+}
+
+
+
+
+
 
 + (UIImage *)stringWithWeather:(NSString *)weatherName
 {
     UIImage *weatherImage;
     if ([weatherName isEqualToString:@"晴"]) {
         weatherImage = [UIImage imageNamed:@"qing"];
-    }else if ([weatherName isEqualToString:@"多云"])
-    {
+    }else if ([weatherName isEqualToString:@"多云"]){
         weatherImage = [UIImage imageNamed:@"duoyun"];
     }else if ([weatherName isEqualToString:@"晴间多云"]){
         weatherImage = [UIImage imageNamed:@"qingjianduoyuan"];
@@ -68,47 +155,14 @@
         weatherImage = [UIImage imageNamed:@"baoyu"];
     }else if ([weatherName isEqualToString:@"雨夹雪"]){
         weatherImage = [UIImage imageNamed:@"yujiaxue"];
-    }else if ([weatherName isEqualToString:@"冰雹"])
-    {
+    }else if ([weatherName isEqualToString:@"冰雹"]){
         weatherImage = [UIImage imageNamed:@"bingbao"];
-    }
-    else
-    {
+    }else{
         weatherImage = [UIImage imageNamed:@"qing"];
     }
     
     
     return weatherImage;
-}
-
-
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    return 7;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    NSInteger i = [indexPath row];
-    static NSString *ID = @"cell";
-    Cell *cell = [tableView dequeueReusableCellWithIdentifier:ID];
-    if (!cell) {
-        cell = [[[NSBundle mainBundle]loadNibNamed:@"Cell" owner:nil options:nil]firstObject];
-    }
-    WeatherData *weather = self.wData[i];
-    cell.date.text = weather.date;
-    cell.cond.text = weather.condition;
-    cell.tmp.text = weather.tmp;
-    
-    
-    tableView.separatorStyle = UITableViewCellSelectionStyleNone; //无边框
-    tableView.scrollEnabled = NO; //不可滚动
-    cell.selectionStyle = UITableViewCellSelectionStyleNone; //不可选中
-    cell.backgroundColor = [UIColor clearColor];
-    cell.textLabel.textColor = [UIColor whiteColor];
-    
-    return cell;
 }
 
 @end

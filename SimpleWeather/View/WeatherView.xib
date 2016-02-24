@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -26,15 +26,6 @@
                             <rect key="frame" x="-8" y="-8" width="375" height="603"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="40" sectionHeaderHeight="28" sectionFooterHeight="28" id="7IV-La-YMM">
-                                    <rect key="frame" x="10" y="650" width="357" height="280"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                    <connections>
-                                        <outlet property="dataSource" destination="iN0-l3-epB" id="bec-OY-gPK"/>
-                                        <outlet property="delegate" destination="iN0-l3-epB" id="bI1-0Y-ZxZ"/>
-                                    </connections>
-                                </tableView>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="R7h-hG-iai">
                                     <rect key="frame" x="110" y="479" width="172" height="34"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -60,6 +51,48 @@
                                     <rect key="frame" x="74" y="71" width="226" height="207"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 </imageView>
+                                <view contentMode="scaleToFill" id="7c6-Cl-kBy">
+                                    <rect key="frame" x="10" y="650" width="375" height="667"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <view tag="100" contentMode="scaleToFill" id="NRQ-td-LX2" customClass="WeeklyForecast">
+                                            <rect key="frame" x="0.0" y="20" width="62.5" height="350"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <view tag="101" contentMode="scaleToFill" id="lxb-nV-sjK" customClass="WeeklyForecast">
+                                            <rect key="frame" x="62.5" y="20" width="62.5" height="350"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <view tag="102" contentMode="scaleToFill" id="FfG-mt-8Ju" customClass="WeeklyForecast">
+                                            <rect key="frame" x="125" y="20" width="62.5" height="350"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <view tag="103" contentMode="scaleToFill" id="Skq-xa-fz8" customClass="WeeklyForecast">
+                                            <rect key="frame" x="187.5" y="20" width="62.5" height="350"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <view tag="104" contentMode="scaleToFill" id="03W-uF-zRn" customClass="WeeklyForecast">
+                                            <rect key="frame" x="250" y="20" width="62.5" height="350"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <view tag="105" contentMode="scaleToFill" id="Fo4-Uz-UgT" customClass="WeeklyForecast">
+                                            <rect key="frame" x="312" y="20" width="62.5" height="350"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <view contentMode="scaleToFill" id="2Th-3d-XSA">
+                                            <rect key="frame" x="0.0" y="120" width="375" height="165"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </view>
                             </subviews>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         </view>
@@ -72,8 +105,8 @@
                 <outlet property="cityLable" destination="Xuh-ac-n5C" id="0uE-4D-hqb"/>
                 <outlet property="nowCond" destination="G1u-qN-UHd" id="1TW-td-gzn"/>
                 <outlet property="nowTmp" destination="5Gu-xK-MDz" id="bhx-FE-0Ce"/>
+                <outlet property="pathView" destination="2Th-3d-XSA" id="cY5-4F-gtB"/>
                 <outlet property="scrollView" destination="xx3-vx-ylf" id="hbq-hO-xOv"/>
-                <outlet property="tableView" destination="7IV-La-YMM" id="ula-Lk-aWX"/>
                 <outlet property="weatherImg" destination="u3m-c4-PgQ" id="g6N-Mi-Tj5"/>
                 <outlet property="winddir" destination="R7h-hG-iai" id="HrU-dL-tgU"/>
             </connections>

@@ -17,5 +17,10 @@
     // Drawing code
 }
 */
+- (void)awakeFromNib
+{
+    [[NSBundle mainBundle]loadNibNamed:@"WeeklyForecast" owner:self options:nil];
+    [self addSubview:self.view];
+}
 
 @end

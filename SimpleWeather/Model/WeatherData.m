@@ -13,9 +13,15 @@
 - (instancetype)initWithDict:(NSDictionary *)dict
 {
     if (self = [super init]) {
-        self.date = dict[@"date"];
-        self.condition = [NSString stringWithFormat:@"%@ / %@",dict[@"cond"][@"txt_d"],dict[@"cond"][@"txt_n"]];
-        self.tmp = [NSString stringWithFormat:@"%@℃ ~ %@℃",dict[@"tmp"][@"min"],dict[@"tmp"][@"max"]];
+        NSMutableString *temp = [[NSMutableString alloc]initWithString:dict[@"date"]];
+        [temp deleteCharactersInRange:NSMakeRange(0, 5)];
+        NSString *date = [NSString stringWithString:temp];
+        date = [date stringByReplacingOccurrencesOfString:@"-" withString:@"/"];
+        self.date = date;
+        self.dayCond = dict[@"cond"][@"txt_d"];
+        self.nightCond = dict[@"cond"][@"txt_n"];
+        self.maxTmp = [NSString stringWithFormat:@"%@℃",dict[@"tmp"][@"max"]];
+        self.minTmp = [NSString stringWithFormat:@"%@℃",dict[@"tmp"][@"min"]];
     }
     return self;
 }

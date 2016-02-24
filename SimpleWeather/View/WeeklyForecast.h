@@ -9,5 +9,11 @@
 #import <UIKit/UIKit.h>
 
 @interface WeeklyForecast : UIView
+@property (weak, nonatomic) IBOutlet UILabel *date;
+@property (weak, nonatomic) IBOutlet UILabel *dayCond;
+@property (weak, nonatomic) IBOutlet UILabel *maxTmp;
+@property (weak, nonatomic) IBOutlet UILabel *nightCond;
+@property (weak, nonatomic) IBOutlet UILabel *minTmp;
+@property (strong, nonatomic) IBOutlet UIView *view;
 
 @end

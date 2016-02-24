@@ -64,8 +64,6 @@
 		9CBA57701C719374005D871B /* WeatherData.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CBA576F1C719374005D871B /* WeatherData.m */; };
 		9CBA57761C719AB1005D871B /* WeatherView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CBA57751C719AB1005D871B /* WeatherView.m */; };
 		9CBA57781C719AC4005D871B /* WeatherView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9CBA57771C719AC4005D871B /* WeatherView.xib */; };
-		9CBA577E1C71A415005D871B /* Cell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9CBA577D1C71A415005D871B /* Cell.xib */; };
-		9CBA57811C71A478005D871B /* Cell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CBA57801C71A478005D871B /* Cell.m */; };
 		9CBA57B61C71ECD0005D871B /* SearchBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CBA57B51C71ECD0005D871B /* SearchBarViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -186,9 +184,6 @@
 		9CBA57741C719AB1005D871B /* WeatherView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeatherView.h; sourceTree = "<group>"; };
 		9CBA57751C719AB1005D871B /* WeatherView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeatherView.m; sourceTree = "<group>"; };
 		9CBA57771C719AC4005D871B /* WeatherView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WeatherView.xib; sourceTree = "<group>"; };
-		9CBA577D1C71A415005D871B /* Cell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Cell.xib; sourceTree = "<group>"; };
-		9CBA577F1C71A478005D871B /* Cell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cell.h; sourceTree = "<group>"; };
-		9CBA57801C71A478005D871B /* Cell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Cell.m; sourceTree = "<group>"; };
 		9CBA57B41C71ECD0005D871B /* SearchBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchBarViewController.h; sourceTree = "<group>"; };
 		9CBA57B51C71ECD0005D871B /* SearchBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchBarViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -344,9 +339,6 @@
 				9CBA57741C719AB1005D871B /* WeatherView.h */,
 				9CBA57751C719AB1005D871B /* WeatherView.m */,
 				9CBA57771C719AC4005D871B /* WeatherView.xib */,
-				9CBA577F1C71A478005D871B /* Cell.h */,
-				9CBA57801C71A478005D871B /* Cell.m */,
-				9CBA577D1C71A415005D871B /* Cell.xib */,
 				9C60EFBE1C7D48030003967F /* WeeklyForecast.h */,
 				9C60EFBF1C7D48030003967F /* WeeklyForecast.m */,
 				9C60EFC11C7D481B0003967F /* WeeklyForecast.xib */,
@@ -601,7 +593,6 @@
 				9C6D422E1C72F76F00F3E656 /* qingjianduoyun@2x.png in Resources */,
 				9C6D422F1C72F76F00F3E656 /* xiaoxue@2x.png in Resources */,
 				9C6D42311C72F76F00F3E656 /* yin@2x.png in Resources */,
-				9CBA577E1C71A415005D871B /* Cell.xib in Resources */,
 				9CBA570D1C717467005D871B /* Main.storyboard in Resources */,
 				9C6D422D1C72F76F00F3E656 /* qing@2x.png in Resources */,
 				9C6D422B1C72F76F00F3E656 /* dayu@2x.png in Resources */,
@@ -641,7 +632,6 @@
 			files = (
 				9C60EFC01C7D48030003967F /* WeeklyForecast.m in Sources */,
 				9CBA57691C71886D005D871B /* UIScrollView+MJExtension.m in Sources */,
-				9CBA57811C71A478005D871B /* Cell.m in Sources */,
 				9CBA57681C71886D005D871B /* MJRefreshConst.m in Sources */,
 				9CBA57241C7186F5005D871B /* AFSecurityPolicy.m in Sources */,
 				9CBA575E1C71886D005D871B /* MJRefreshAutoGifFooter.m in Sources */,

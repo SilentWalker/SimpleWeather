@@ -15,8 +15,10 @@
 @property (nonatomic, strong) NSString *nowTmp;
 @property (nonatomic, strong) NSString *winddir;
 @property (nonatomic, strong) NSString *date;
-@property (nonatomic, strong) NSString *condition;
-@property (nonatomic, strong) NSString *tmp;
+@property (nonatomic, strong) NSString *maxTmp;
+@property (nonatomic, strong) NSString *minTmp;
+@property (nonatomic, strong) NSString *dayCond;
+@property (nonatomic, strong) NSString *nightCond;
 
 - (instancetype)initWithDict: (NSDictionary *)dict;
 
