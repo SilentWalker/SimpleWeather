@@ -214,7 +214,7 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		9C6D42191C72F76F00F3E656 /* 天气 */ = {
+		9C6D42191C72F76F00F3E656 /* WeatherName */ = {
 			isa = PBXGroup;
 			children = (
 				9C6D421A1C72F76F00F3E656 /* baoyu@2x.png */,
@@ -231,6 +231,7 @@
 				9C6D42251C72F76F00F3E656 /* zhenyu@2x.png */,
 				9C6D42261C72F76F00F3E656 /* bingbao.png */,
 			);
+			name = WeatherName;
 			path = "天气";
 			sourceTree = "<group>";
 		};
@@ -306,7 +307,7 @@
 		9CBA56FF1C717467005D871B /* Others */ = {
 			isa = PBXGroup;
 			children = (
-				9C6D42191C72F76F00F3E656 /* 天气 */,
+				9C6D42191C72F76F00F3E656 /* WeatherName */,
 				9CBA57081C717467005D871B /* Lib */,
 				9CBA57001C717467005D871B /* AppDelegate.h */,
 				9CBA57011C717467005D871B /* AppDelegate.m */,

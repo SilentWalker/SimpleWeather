@@ -75,10 +75,17 @@
         point = CGPointMake(firstX + i * xLenth, (max - mini) * gap);
         [minPoints addObject:[NSValue valueWithCGPoint:point]];
     }
-    UIBezierPath *maxBezier = [UIBezierPath bezierPath];
-    [maxPoints enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+    UIBezierPath *bezier = [UIBezierPath bezierPath];
+    
+       [maxPoints enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         CGPoint point = [obj CGPointValue];
-        [maxBezier addLineToPoint:point];
+        
+        if (idx == 0) {
+            [bezier moveToPoint:point];
+        } else {
+            [bezier addLineToPoint:point];
+        }
+        
         
         CGRect rect;
         rect.origin.x = point.x - 1.5;
@@ -87,22 +94,20 @@
         rect.size.height = 4;
 
         UIBezierPath *arc= [UIBezierPath bezierPathWithOvalInRect:rect];
-        [maxBezier appendPath:arc];
+        [bezier appendPath:arc];
 
         
     }];
     
-    CAShapeLayer *lineLayer = [CAShapeLayer layer];
-    lineLayer.frame = CGRectMake(0, 0 , 375, 165);
-    lineLayer.fillColor = [UIColor whiteColor].CGColor;
-    lineLayer.path = maxBezier.CGPath;
-    lineLayer.strokeColor = [UIColor whiteColor].CGColor;
-    [self.pathView.layer addSublayer:lineLayer];
-
-    UIBezierPath *minBezier = [UIBezierPath bezierPath];
     [minPoints enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         CGPoint point = [obj CGPointValue];
-        [minBezier addLineToPoint:point];
+        
+        if (idx == 0) {
+            [bezier moveToPoint:point];
+        } else {
+            [bezier addLineToPoint:point];
+        }
+        
         
         CGRect rect;
         rect.origin.x = point.x - 1.5;
@@ -110,17 +115,21 @@
         rect.size.width = 4;
         rect.size.height = 4;
         
-        UIBezierPath *arc= [UIBezierPath bezierPathWithOvalInRect:rect];
-        [minBezier appendPath:arc];
+        UIBezierPath *linePoint= [UIBezierPath bezierPathWithOvalInRect:rect];
+        [bezier appendPath:linePoint];
+        
         
     }];
-    CAShapeLayer *minlineLayer = [CAShapeLayer layer];
-    minlineLayer.frame = CGRectMake(0, 0 , 375, 165);
-    minlineLayer.fillColor = [UIColor whiteColor].CGColor;
-    minlineLayer.path = minBezier.CGPath;
-    minlineLayer.strokeColor = [UIColor whiteColor].CGColor;
-    [self.pathView.layer addSublayer:minlineLayer];
-  
+    
+    CAShapeLayer *lineLayer = [CAShapeLayer layer];
+    lineLayer.frame = CGRectMake(0, 0 , xLenth, yLenth);
+    lineLayer.fillColor = [UIColor whiteColor].CGColor;
+    lineLayer.path = bezier.CGPath;
+    lineLayer.strokeColor = [UIColor whiteColor].CGColor;
+    lineLayer.lineWidth = 2;
+
+    [self.pathView.layer addSublayer:lineLayer];
+    
 }
 
 

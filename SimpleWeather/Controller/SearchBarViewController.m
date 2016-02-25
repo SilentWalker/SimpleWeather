@@ -9,7 +9,6 @@
 #import "SearchBarViewController.h"
 
 @interface SearchBarViewController () <UISearchBarDelegate>
-@property (nonatomic, strong) UIButton *searchBtn;
 @property (nonatomic, strong) UISearchBar *searchBar;
 @end
 
@@ -18,8 +17,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.view addSubview:self.searchBar];
-    [self.view addSubview:self.searchBtn];
-    self.view.backgroundColor = [UIColor whiteColor];
+    self.view.backgroundColor = [UIColor darkGrayColor];
     // Do any additional setup after loading the view.
 }
 
@@ -55,36 +53,40 @@
 {
     self.cityName = cityName;
 }
-- (void)setCityName:(cityName)cityName
-{
-    //如果为空就拷贝
-    if (_cityName != cityName) {
-        _cityName = [cityName copy];
-    }
-}- (void)cancle
-{
-    [self.searchBar resignFirstResponder];
-    [self returnCityName];
-}
 
 - (UISearchBar *)searchBar
 {
     if (!_searchBar) {
-        _searchBar = [[UISearchBar alloc]initWithFrame:CGRectMake(0, 30, self.view.frame.size.width - 60, 50)];
-        _searchBar.searchBarStyle = UISearchBarStyleMinimal;
+        _searchBar = [[UISearchBar alloc]initWithFrame:CGRectMake(0, 20, self.view.frame.size.width , 50)];
+        _searchBar.searchBarStyle = UISearchBarStyleProminent;
+        _searchBar.barStyle = UIBarStyleBlackOpaque;
         _searchBar.delegate = self;
-    }
+ 
+        
+          }
     return _searchBar;
 }
-
-- (UIButton *)searchBtn
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
 {
-    if (!_searchBtn) {
-        _searchBtn = [UIButton buttonWithType:UIButtonTypeSystem];
-        [_searchBtn setFrame:CGRectMake(self.searchBar.frame.size.width + 5, self.searchBar.frame.origin.y + 5, 40, 40)];
-        [_searchBtn setTitle:@"取消" forState:UIControlStateNormal];
-        [_searchBtn addTarget:self action:@selector(cancle) forControlEvents:UIControlEventTouchUpInside];
+    [self.searchBar resignFirstResponder];
+    [self returnCityName];
+}
+//修改CancleButton
+- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar
+{
+    
+    [searchBar setShowsCancelButton:YES animated:YES];
+    
+    for (UIView *canclebtns in [[[searchBar subviews]objectAtIndex:0]subviews]) {
+//        NSLog(@"%@",canclebtns);
+        if ([canclebtns isKindOfClass:[UIButton class]]) {
+            UIButton *cancleBtn = (UIButton*)canclebtns;
+          
+            [cancleBtn setTitle:@"取消" forState:UIControlStateNormal];
+//            [cancleBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+            break;
+        }
+        
     }
-    return _searchBtn;
 }
 @end

@@ -29,6 +29,7 @@
     [self loadInitialView];
     [self addBtn];
     [self.view addSubview:self.pageControl];
+    self.view.backgroundColor = [UIColor blackColor];
 
 }
 #pragma mark - 方法
@@ -81,8 +82,7 @@
 //    UIImageView *backgroundImage = [[UIImageView alloc]initWithImage:backImage];
 //    backgroundImage.frame = weatherView.bounds;
 //    [weatherView insertSubview:backgroundImage atIndex:0];
-    weatherView.backgroundColor = [UIColor blackColor];
-    [self.mainScrollView addSubview:weatherView];
+      [self.mainScrollView addSubview:weatherView];
 }
 
 - (void)getWeatherDataOfCity: (NSString *)city andTag: (NSInteger)tag
