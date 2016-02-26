@@ -110,11 +110,8 @@
     
 
     //清除上一次绘制的layer
-    for (CAShapeLayer *layer in [self.pathView.layer sublayers]) {
-        [layer removeFromSuperlayer];
-    }
-
-    
+    self.pathView.layer.sublayers = nil;
+    //添加新的layer
     CAShapeLayer *lineLayer = [CAShapeLayer layer];
     CAShapeLayer *pointLayer = [CAShapeLayer layer];
     
@@ -129,7 +126,7 @@
     
     [self.pathView.layer addSublayer:lineLayer];
     [self.pathView.layer addSublayer:pointLayer];
-    
+
 }
 
 
