@@ -17,7 +17,7 @@ static sqlite3 *_db;
     //拼接SQL语句，创建数据库
     NSString *cachepath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)lastObject];
     NSString *fullpath = [cachepath stringByAppendingPathComponent:@"weather.sqlite"];
-    NSLog(@"%@",fullpath);
+//    NSLog(@"%@",fullpath);
     const char *path = fullpath.UTF8String;
     if (sqlite3_open(path, &_db) == SQLITE_OK) {
         //NSLog(@"打开数据库成功");

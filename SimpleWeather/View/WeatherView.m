@@ -127,7 +127,8 @@
     lineLayer.path = bezier.CGPath;
     lineLayer.strokeColor = [UIColor whiteColor].CGColor;
     lineLayer.lineWidth = 2;
-
+    //掩盖上一次生成的图层
+    lineLayer.backgroundColor = [UIColor blackColor].CGColor;
     [self.pathView.layer addSublayer:lineLayer];
     
 }

@@ -186,6 +186,7 @@
                 WeatherView *view = [self.mainScrollView viewWithTag:i + 1];
                 [view removeFromSuperview];
                 [WeatherTool deleteWeatherData:i + 1];
+                
             //移动后续页面tag及数据库记录
             }else if (i > self.pageControl.currentPage)
             {
@@ -195,9 +196,9 @@
                 [WeatherTool moveWeatherData:i + 1];
             }
     }
-    self.tagNum -= 1;
-    self.mainScrollView.contentSize = CGSizeMake(self.mainScrollView.contentSize.width - self.view.frame.size.width, 0);
-    self.pageControl.numberOfPages = self.mainScrollView.contentSize.width / self.view.frame.size.width;
+        self.tagNum -= 1;
+        self.mainScrollView.contentSize = CGSizeMake(self.mainScrollView.contentSize.width - self.view.frame.size.width, 0);
+        self.pageControl.numberOfPages = self.mainScrollView.contentSize.width / self.view.frame.size.width;
     }
     
 }
@@ -293,7 +294,7 @@
 -(NSInteger)tagNum
 {
     if (!_tagNum) {
-        _tagNum = 1;
+        _tagNum = 0;
     }
     return _tagNum;
 }

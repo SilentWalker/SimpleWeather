@@ -55,6 +55,11 @@
                                     <rect key="frame" x="10" y="650" width="375" height="667"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
+                                        <view contentMode="scaleToFill" id="2Th-3d-XSA">
+                                            <rect key="frame" x="0.0" y="120" width="375" height="165"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
                                         <view tag="100" contentMode="scaleToFill" id="NRQ-td-LX2" customClass="WeeklyForecast">
                                             <rect key="frame" x="0.0" y="20" width="62.5" height="350"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -82,11 +87,6 @@
                                         </view>
                                         <view tag="105" contentMode="scaleToFill" id="Fo4-Uz-UgT" customClass="WeeklyForecast">
                                             <rect key="frame" x="312" y="20" width="62.5" height="350"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        </view>
-                                        <view contentMode="scaleToFill" id="2Th-3d-XSA">
-                                            <rect key="frame" x="0.0" y="120" width="375" height="165"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
