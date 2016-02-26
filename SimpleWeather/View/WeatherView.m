@@ -20,7 +20,7 @@
 */
 - (void)setWeatherConditionWithData:(NSArray *)data
 {
-    self.wData = data;
+    
     WeatherData *weather = data[0];
     self.nowCond.text = weather.nowCond;
     self.nowTmp.text = weather.nowTmp;

@@ -18,9 +18,6 @@
 @property (weak, nonatomic) IBOutlet UIView *pathView;
 
 
-
-@property (nonatomic, strong) NSArray *wData;
-
 - (void)setWeatherConditionWithData: (NSArray *)data;
 
 @end
