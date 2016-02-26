@@ -217,6 +217,8 @@
         NSTimeInterval uptime = [upDate timeIntervalSince1970];
         
         double timeGap = (nowtime - uptime) / 60;
+//        NSLog(@"%@--%@--%@",date,upDate,str);
+//        NSLog(@"%f",timeGap);
         //若大于70分钟则刷新
         if (timeGap > 70) {
             //消息框提示

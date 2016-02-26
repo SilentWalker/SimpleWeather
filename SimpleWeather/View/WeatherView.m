@@ -64,72 +64,71 @@
     double xLenth = firstX * 2;
     double yLenth = self.pathView.frame.size.height;
     double gap = yLenth / (max - min);
+    
+    UIBezierPath *linePath = [UIBezierPath bezierPath];
+    UIBezierPath *pointPath = [UIBezierPath bezierPath];
+    //温度转化为坐标点，填入对应数组，绘制点
     CGPoint point;
-    for (int i = 0; i<6; i++) {
+    for (int i = 0; i < 6; i++) {
         NSString *maxtemp = maxTmp[i];
         NSInteger maxi = maxtemp.intValue;
         NSString *mintemp = minTmp[i];
         NSInteger mini = mintemp.intValue;
         point = CGPointMake(firstX + i * xLenth, (max - maxi) * gap);
         [maxPoints addObject:[NSValue valueWithCGPoint:point]];
+        
+        [pointPath moveToPoint:point];
+        [pointPath addArcWithCenter:point radius:3.0 startAngle:M_PI * 2 endAngle:0 clockwise:NO];
+        
         point = CGPointMake(firstX + i * xLenth, (max - mini) * gap);
         [minPoints addObject:[NSValue valueWithCGPoint:point]];
+        
+        [pointPath moveToPoint:point];
+        [pointPath addArcWithCenter:point radius:3.0 startAngle:M_PI * 2 endAngle:0 clockwise:NO];
+        
+        
     }
-    UIBezierPath *bezier = [UIBezierPath bezierPath];
-    
-       [maxPoints enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+   
+    [maxPoints enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         CGPoint point = [obj CGPointValue];
         
         if (idx == 0) {
-            [bezier moveToPoint:point];
+            [linePath moveToPoint:point];
         } else {
-            [bezier addLineToPoint:point];
+            [linePath addLineToPoint:point];
         }
-        
-        
-        CGRect rect;
-        rect.origin.x = point.x - 1.5;
-        rect.origin.y = point.y - 1.5;
-        rect.size.width = 4;
-        rect.size.height = 4;
-
-        UIBezierPath *arc= [UIBezierPath bezierPathWithOvalInRect:rect];
-        [bezier appendPath:arc];
-
-        
     }];
-    
     [minPoints enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         CGPoint point = [obj CGPointValue];
         
         if (idx == 0) {
-            [bezier moveToPoint:point];
+            [linePath moveToPoint:point];
         } else {
-            [bezier addLineToPoint:point];
+            [linePath addLineToPoint:point];
         }
-        
-        
-        CGRect rect;
-        rect.origin.x = point.x - 1.5;
-        rect.origin.y = point.y - 1.5;
-        rect.size.width = 4;
-        rect.size.height = 4;
-        
-        UIBezierPath *linePoint= [UIBezierPath bezierPathWithOvalInRect:rect];
-        [bezier appendPath:linePoint];
-        
-        
     }];
     
+
+    //清除上一次绘制的layer
+    for (CAShapeLayer *layer in [self.pathView.layer sublayers]) {
+        [layer removeFromSuperlayer];
+    }
+
+    
     CAShapeLayer *lineLayer = [CAShapeLayer layer];
-    lineLayer.frame = CGRectMake(0, 0 , xLenth, yLenth);
-    lineLayer.fillColor = [UIColor whiteColor].CGColor;
-    lineLayer.path = bezier.CGPath;
+    CAShapeLayer *pointLayer = [CAShapeLayer layer];
+    
+    lineLayer.frame = CGRectMake(0, 0, self.pathView.frame.size.width, yLenth);
+    lineLayer.path = linePath.CGPath;
     lineLayer.strokeColor = [UIColor whiteColor].CGColor;
     lineLayer.lineWidth = 2;
-    //掩盖上一次生成的图层
-    lineLayer.backgroundColor = [UIColor blackColor].CGColor;
+    
+    pointLayer.frame = lineLayer.frame;
+    pointLayer.path = pointPath.CGPath;
+    pointLayer.fillColor = [UIColor whiteColor].CGColor;
+    
     [self.pathView.layer addSublayer:lineLayer];
+    [self.pathView.layer addSublayer:pointLayer];
     
 }
 
