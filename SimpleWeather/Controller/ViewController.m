@@ -30,7 +30,7 @@
     [self addBtn];
     [self.view addSubview:self.pageControl];
     self.view.backgroundColor = [UIColor blackColor];
-
+    
 }
 #pragma mark - 方法
 //加载初始页面
@@ -54,9 +54,9 @@
         [self drawWeatherViewOfWidth:self.view.frame.size.width];
         [self getWeatherDataOfCity:@"beijing" andTag:1];
         self.tagNum = 1;
-
+        
     }
-
+    
 }
 //绘制页面
 - (void)drawWeatherViewOfWidth: (CGFloat)width
@@ -65,7 +65,7 @@
     
     [self.mainScrollView setContentOffset:CGPointMake(width - self.view.frame.size.width, 0) animated:YES];
     self.pageControl.numberOfPages = width / self.view.frame.size.width;
-
+    
     WeatherView *weatherView = [[[NSBundle mainBundle]loadNibNamed:@"WeatherView" owner:nil options:nil]firstObject];
     
     [weatherView setFrame:CGRectMake(width - self.view.frame.size.width, 0, self.view.frame.size.width, self.view.frame.size.height)];
@@ -78,11 +78,11 @@
     
     
     // 以3张图片轮流设置背景
-//    UIImage *backImage = [UIImage imageNamed:[NSString stringWithFormat:@"%ld",(weatherView.tag  % 3)]];
-//    UIImageView *backgroundImage = [[UIImageView alloc]initWithImage:backImage];
-//    backgroundImage.frame = weatherView.bounds;
-//    [weatherView insertSubview:backgroundImage atIndex:0];
-      [self.mainScrollView addSubview:weatherView];
+    //    UIImage *backImage = [UIImage imageNamed:[NSString stringWithFormat:@"%ld",(weatherView.tag  % 3)]];
+    //    UIImageView *backgroundImage = [[UIImageView alloc]initWithImage:backImage];
+    //    backgroundImage.frame = weatherView.bounds;
+    //    [weatherView insertSubview:backgroundImage atIndex:0];
+    [self.mainScrollView addSubview:weatherView];
 }
 
 - (void)getWeatherDataOfCity: (NSString *)city andTag: (NSInteger)tag
@@ -150,7 +150,7 @@
     [deleteBtn setFrame:CGRectMake(0, self.view.frame.size.height - 44, 44, 44)];
     [deleteBtn addTarget:self action:@selector(deleteView) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:deleteBtn];
-     
+    
     
 }
 
@@ -158,24 +158,24 @@
 {
     SearchBarViewController *searchView = [[SearchBarViewController alloc]init];
     [self presentViewController:searchView animated:YES completion:^{
-       [searchView searchCityName:^(NSString *city) {
-           //tag数量加一，创建对应记录，等待传入数据更新
-           self.tagNum += 1;
-
-           [self drawWeatherViewOfWidth:self.mainScrollView.contentSize.width + self.view.frame.size.width];
-           [self getWeatherDataOfCity:city andTag:self.tagNum];
-           [WeatherTool saveWeatherData:self.tagNum :nil];
-
-       }];
+        [searchView searchCityName:^(NSString *city) {
+            //tag数量加一，创建对应记录，等待传入数据更新
+            self.tagNum += 1;
+            
+            [self drawWeatherViewOfWidth:self.mainScrollView.contentSize.width + self.view.frame.size.width];
+            [self getWeatherDataOfCity:city andTag:self.tagNum];
+            [WeatherTool saveWeatherData:self.tagNum :nil];
+            
+        }];
     }];
-
+    
 }
 /**
  *  删除页面，同时删除数据库对应数据
  */
 - (void)deleteView
 {
-
+    
     if (self.tagNum == 0) {
         return;
     }else{
@@ -187,7 +187,7 @@
                 [view removeFromSuperview];
                 [WeatherTool deleteWeatherData:i + 1];
                 
-            //移动后续页面tag及数据库记录
+                //移动后续页面tag及数据库记录
             }else if (i > self.pageControl.currentPage)
             {
                 WeatherView *view = [self.mainScrollView viewWithTag:i +1];
@@ -195,7 +195,7 @@
                 view.tag = i;
                 [WeatherTool moveWeatherData:i + 1];
             }
-    }
+        }
         self.tagNum -= 1;
         self.mainScrollView.contentSize = CGSizeMake(self.mainScrollView.contentSize.width - self.view.frame.size.width, 0);
         self.pageControl.numberOfPages = self.mainScrollView.contentSize.width / self.view.frame.size.width;
@@ -217,8 +217,8 @@
         NSTimeInterval uptime = [upDate timeIntervalSince1970];
         
         double timeGap = (nowtime - uptime) / 60;
-//        NSLog(@"%@--%@--%@",date,upDate,str);
-//        NSLog(@"%f",timeGap);
+        //        NSLog(@"%@--%@--%@",date,upDate,str);
+        //        NSLog(@"%f",timeGap);
         //若大于70分钟则刷新
         if (timeGap > 70) {
             //消息框提示
@@ -227,8 +227,8 @@
             hud.label.text = NSLocalizedString(@"数据更新中", @"HUD message title");
             hud.offset = CGPointMake(0, 0);
             [hud hideAnimated:YES afterDelay:1.f];
-
-             
+            
+            
             for (int i = 0; i < self.cityArray.count; i++) {
                 WeatherView *view = [self.mainScrollView viewWithTag:i + 1];
                 [self getWeatherDataOfCity:view.cityLable.text andTag:i + 1];
@@ -238,7 +238,7 @@
             self.cityArray = [[WeatherTool queryWeatherData]mutableCopy];
             
         }
-
+        
     }
     
 }

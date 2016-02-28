@@ -12,12 +12,12 @@
 @implementation WeatherView
 
 /*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect {
-    // Drawing code
-}
-*/
+ // Only override drawRect: if you perform custom drawing.
+ // An empty implementation adversely affects performance during animation.
+ - (void)drawRect:(CGRect)rect {
+ // Drawing code
+ }
+ */
 - (void)setWeatherConditionWithData:(NSArray *)data
 {
     
@@ -88,7 +88,7 @@
         
         
     }
-   
+    
     [maxPoints enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         CGPoint point = [obj CGPointValue];
         
@@ -108,7 +108,7 @@
         }
     }];
     
-
+    
     //清除上一次绘制的layer
     self.pathView.layer.sublayers = nil;
     //添加新的layer
@@ -126,7 +126,7 @@
     
     [self.pathView.layer addSublayer:lineLayer];
     [self.pathView.layer addSublayer:pointLayer];
-
+    
 }
 
 

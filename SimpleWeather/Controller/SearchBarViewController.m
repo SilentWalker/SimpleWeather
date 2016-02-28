@@ -61,9 +61,9 @@
         _searchBar.searchBarStyle = UISearchBarStyleProminent;
         _searchBar.barStyle = UIBarStyleBlackOpaque;
         _searchBar.delegate = self;
- 
         
-          }
+        
+    }
     return _searchBar;
 }
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
@@ -78,12 +78,12 @@
     [searchBar setShowsCancelButton:YES animated:YES];
     
     for (UIView *canclebtns in [[[searchBar subviews]objectAtIndex:0]subviews]) {
-//        NSLog(@"%@",canclebtns);
+        //        NSLog(@"%@",canclebtns);
         if ([canclebtns isKindOfClass:[UIButton class]]) {
             UIButton *cancleBtn = (UIButton*)canclebtns;
-          
+            
             [cancleBtn setTitle:@"取消" forState:UIControlStateNormal];
-//            [cancleBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+            //            [cancleBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
             break;
         }
         
